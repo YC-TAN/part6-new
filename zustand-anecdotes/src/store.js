@@ -1,21 +1,24 @@
 import { create } from 'zustand';
 import service from './services/anecdotes'
+import anecdotes from './services/anecdotes';
 
 const asObject = anecdote => ({
   content: anecdote,
   votes: 0
 })
 
-const useAnecdoteStore = create((set) => ({
+const useAnecdoteStore = create((set, get) => ({
   anecdotes: [],
   filter: null,
   actions: {
-    vote: (id) => set(state => ({
-      anecdotes: state.anecdotes.map(a => a.id === id 
-        ? { ...a, votes: a.votes + 1} 
-        : a
+    vote: async (id) => {
+      const anecdote = get().anecdotes.find(a => a.id === id);
+      const updated = await service.update(
+        id, 
+        {...anecdote, votes: anecdote.votes + 1}
       )
-    })),
+      set(state => ({anecdotes: state.anecdotes.map(a => a.id === id ? updated :a)}))    
+    },
     add: async (content) => {
       const newObj = asObject(content);
       const newAnecdote = await service.create(newObj)
