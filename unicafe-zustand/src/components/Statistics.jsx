@@ -3,7 +3,7 @@ import { useScore } from "../store"
 const Statistics = () => {
   const {good, neutral, bad} = useScore();
   const all = good + neutral + bad
-  const average = (good + bad * -1 ) / 3
+  const average = (good + bad * -1 ) / all
   const positive = all === 0 ? 0 : (good / all ) * 100
   
   return (
@@ -16,7 +16,7 @@ const Statistics = () => {
           <tr><td>bad</td><td>{bad}</td></tr>
           <tr><td>all</td><td>{all}</td></tr>
           <tr><td>average</td><td>{average}</td></tr>
-          <tr><td>positive</td><td>{positive}</td></tr>
+          <tr><td>positive</td><td>{positive + " %"}</td></tr>
         </tbody>
       </table>
     </div>
