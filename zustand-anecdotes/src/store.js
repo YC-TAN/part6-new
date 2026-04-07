@@ -1,11 +1,8 @@
 import { create } from 'zustand';
 import service from './services/anecdotes'
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
 const asObject = anecdote => ({
   content: anecdote,
-  id: getId(),
   votes: 0
 })
 
@@ -19,9 +16,11 @@ const useAnecdoteStore = create((set) => ({
         : a
       )
     })),
-    add: (anecdote) => set(state => ({
-      anecdotes: [...state.anecdotes, asObject(anecdote)]
-    })),
+    add: async (content) => {
+      const newObj = asObject(content);
+      const newAnecdote = await service.create(newObj)
+      set((state) => ({anecdotes: [...state.anecdotes, newAnecdote]}))
+    },
     setFilter: (newFilter) => set(()=> ({filter: newFilter.trim().toLowerCase()})),
     initialize: async () => {
       const anecdotes = await service.getAll()
