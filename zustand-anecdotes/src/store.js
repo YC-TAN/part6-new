@@ -1,4 +1,3 @@
-
 import { create } from 'zustand'
 
 const anecdotesAtStart = [
@@ -20,7 +19,14 @@ const asObject = anecdote => ({
 
 const useAnecdoteStore = create((set) => ({
   anecdotes: anecdotesAtStart.map(asObject),
-  actions: {},
+  actions: {
+    vote: (id) => set(state => ({
+      anecdotes: state.anecdotes.map(a => a.id === id 
+        ? { ...a, votes: a.votes + 1} 
+        : a
+      )
+    }))
+  },
 }))
 
 export const useAnecdotes = () => useAnecdoteStore((state) => state.anecdotes)
