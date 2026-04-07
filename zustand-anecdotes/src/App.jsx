@@ -1,37 +1,13 @@
-import { useAnecdotes, useAnecdoteActions } from './store'
+import AnecdoteList from "./components/AnecdoteList";
+import AnecdoteForm from "./components/AnecdoteForm";
 
 const App = () => {
-  const anecdotes = useAnecdotes()
-  const {vote, add} = useAnecdoteActions();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newAnecdote = e.target.anecdote.value;
-    add(newAnecdote);
-    e.target.reset();
-  }
-
   return (
     <div>
-      <h2>Anecdotes</h2>
-      {anecdotes.map(anecdote => (
-        <div key={anecdote.id}>
-          <div>{anecdote.content}</div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
-          </div>
-        </div>
-      ))}
-      <h2>create new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input name="anecdote"/>
-        </div>
-        <button type="submit">create</button>
-      </form>
+      <AnecdoteList />
+      <AnecdoteForm />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
