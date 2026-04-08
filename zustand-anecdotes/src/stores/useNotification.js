@@ -1,15 +1,12 @@
 import { create } from 'zustand';
 
 const useNotificationStore = create((set) => ({
-    notification: {
-        message: null,
-        type: null
-    },
+    notification: null,
     actions: {
         setNotification: (message, type) => {
             set(() => ({notification: {message, type}}))
             setTimeout(() => {
-                set(() => ({notification: {message: null, type: null}}))
+                set(() => ({notification: null}))
             }, 5000)
         },
     }
