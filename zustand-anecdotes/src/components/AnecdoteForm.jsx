@@ -1,13 +1,22 @@
-import { useAnecdoteActions } from "../store";
+import { useAnecdoteActions } from "../stores/useAnecdote";
+import { useNotificationActions } from "../stores/useNotification";
 
 const AnecdoteForm = () => {
   const { add } = useAnecdoteActions();
+  const { setNotification } = useNotificationActions();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newAnecdote = e.target.anecdote.value;
-    await add(newAnecdote);
-    e.target.reset();
+
+    if (!newAnecdote) return;
+    try {
+      await add(newAnecdote);
+      setNotification(`New anecdote '${newAnecdote}' added`, "success");
+      e.target.reset();
+    } catch {
+      setNotification(`Failed to add anecdote '${newAnecdote}'`, "error");
+    }
   };
 
   return (

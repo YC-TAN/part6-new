@@ -1,8 +1,10 @@
+import { useEffect } from "react";
+
 import AnecdoteList from "./components/AnecdoteList";
 import AnecdoteForm from "./components/AnecdoteForm";
 import Filter from "./components/Filter";
-import { useAnecdoteActions } from "./store";
-import { useEffect } from "react";
+import Notification from "./components/Notification";
+import { useAnecdoteActions } from "./stores/useAnecdote";
 
 const App = () => {
   const { initialize } = useAnecdoteActions();
@@ -13,6 +15,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification />
       <Filter />
       <AnecdoteList />
       <AnecdoteForm />
