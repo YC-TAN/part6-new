@@ -1,6 +1,5 @@
 import { create } from 'zustand';
-import service from './services/anecdotes'
-import anecdotes from './services/anecdotes';
+import service from '../services/anecdotes'
 
 const asObject = anecdote => ({
   content: anecdote,
