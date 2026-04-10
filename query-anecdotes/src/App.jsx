@@ -1,18 +1,17 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import { useAnecdotes } from './hooks/useAnecdotes'
 
 const App = () => {
+  
+  const {anecdotes, isPending, vote } = useAnecdotes()
+
   const handleVote = (anecdote) => {
-    console.log('vote')
+    vote(anecdote)
   }
 
-  const anecdotes = [
-    {
-      content: 'If it hurts, do it more often',
-      id: '47145',
-      votes: 0,
-    },
-  ]
+  if (isPending) return (<div>loading...</div>)
+
 
   return (
     <div>
@@ -21,7 +20,7 @@ const App = () => {
       <Notification />
       <AnecdoteForm />
 
-      {anecdotes.map((anecdote) => (
+      {anecdotes && anecdotes.map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
