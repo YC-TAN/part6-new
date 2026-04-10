@@ -20,8 +20,14 @@ const create = async (newAnecdote) => {
     const res = await fetch(base_url, options)
 
     if (!res.ok) {
+        if (res.status === 400) {
+            const err = await res.json()
+            throw new Error(err.error)
+        }
         throw new Error('Failed to create resource.')
     }
+
+    
 
     return await res.json()
 

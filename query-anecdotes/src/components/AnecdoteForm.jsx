@@ -5,11 +5,9 @@ const AnecdoteForm = () => {
 
   const onCreate = (event) => {
     event.preventDefault()
-    const content = event.target.anecdote.value
-    if (content.trim().length < 5) return
-    event.target.reset()
-    console.log('new anecdote')
+    const content = event.target.anecdote.value       
     addAnecdote(content.trim())
+    event.target.reset()
   }
 
   return (
