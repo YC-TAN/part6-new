@@ -1,18 +1,30 @@
+import { useNotification } from "../hooks/useNotification";
+
 const Notification = () => {
+  const {notification} = useNotification();
+  console.log('notification state:', notification)
   const style = {
-    border: 'solid',
+    border: "solid",
     padding: 10,
     borderWidth: 1,
-    marginBottom: 5
-  }
-  
-  if (true) return null
+    marginBottom: 5,
+  };
 
-  return (
-    <div style={style}>
-      
-    </div>
-  )
-}
+  const variant = {
+    error: {
+      ...style,
+      color: "red",
+    },
+    success: {
+      ...style,
+      color: "green",
+    },
+  };
 
-export default Notification
+  if (!notification) return null;
+  const { message, type } = notification;
+
+  return <div style={variant[type]}>{message}</div>;
+};
+
+export default Notification;
